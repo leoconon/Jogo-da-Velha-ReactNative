@@ -1,21 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Provider as PaperProvider, Appbar } from 'react-native-paper';
+import StartPage from './pages/StartPage';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import GamePage from './pages/GamePage';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const Stack = createNativeStackNavigator();
+
+export default function App() {    
+    return (
+        <PaperProvider>
+            <StatusBar style="inverted"/>
+            <NavigationContainer>
+                <Stack.Navigator screenOptions={{ header: Header }}>
+                    <Stack.Screen name="StartPage" component={StartPage}/>
+                    <Stack.Screen name="GamePage" component={GamePage}/>
+                </Stack.Navigator>
+            </NavigationContainer>
+        </PaperProvider>
+    );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function Header() {
+    return (
+        <Appbar.Header>
+            <Appbar.Content title="Jogo da Velha" />
+        </Appbar.Header>
+    );
+}
